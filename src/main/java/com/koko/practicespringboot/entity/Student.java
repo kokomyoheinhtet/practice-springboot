@@ -16,15 +16,8 @@ import lombok.*;
 public class Student {
 
     @Id
-//    @SequenceGenerator(
-//            name = "student_seq",
-//            sequenceName = "student_seq",
-//            allocationSize = 1
-//    )
-//    @GeneratedValue(
-//            strategy = GenerationType.SEQUENCE,
-//            generator = "student_seq"
-//    )
+//    @SequenceGenerator(name = "student_seq_name1", sequenceName = "student_seq", allocationSize = 0)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq_name1")
     @GeneratedValue
     private Long id;
     private String name;
@@ -32,6 +25,6 @@ public class Student {
     @Column(name = "email_address", nullable = false)
     private String email;
 
-//    @Embedded
+    @Embedded
     private Guardian guardian;
 }
