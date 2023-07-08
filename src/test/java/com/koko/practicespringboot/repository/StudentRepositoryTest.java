@@ -62,4 +62,47 @@ class StudentRepositoryTest {
 
         System.out.println(students);
     }
+
+    @Test
+    public void printStudentByEmailJpql() {
+        Optional<Student> studentByEmailAddress = studentRepository.getStudentByEmailAddress("koko1@koko.com");
+
+        studentByEmailAddress.ifPresentOrElse(
+                student -> {
+                    System.out.println("It's found");
+                    System.out.println(student);
+                },
+                () -> {
+                    System.out.println("It's not found.");
+                    System.out.println("Needa create");
+                }
+        );
+    }
+
+    @Test
+    public void printStudentNameByEmailJpql() {
+        Optional<String> studentNameByEmailAddress = studentRepository.getStudentNameByEmailAddress("koko@koko.com");
+
+        studentNameByEmailAddress.ifPresentOrElse(System.out::println, () -> System.out.println("not found"));
+    }
+
+    @Test
+    public void printStudentByEmailNativeJpql() {
+        Optional<Student> studentByEmailAddressNative = studentRepository.getStudentByEmailAddressNative("koko1@koko.com");
+
+        studentByEmailAddressNative.ifPresentOrElse(System.out::println, () -> System.out.println("not found"));
+    }
+
+    @Test
+    public void printStudentByEmailNativeJpqlNamedParam() {
+        Optional<Student> studentByEmailAddressNative = studentRepository.getStudentByEmailAddressNativeNamedParam("koko1@koko.com");
+
+        studentByEmailAddressNative.ifPresentOrElse(System.out::println, () -> System.out.println("not found"));
+    }
+
+    @Test
+    public void updateStudentNameByEmail() {
+        int i = studentRepository.updateStudentNameByEmail("kkmhh", "koko1@koko.com");
+        System.out.println(i);
+    }
 }
