@@ -1,6 +1,8 @@
 package com.koko.practicespringboot.repository;
 
 import com.koko.practicespringboot.entity.Course;
+import com.koko.practicespringboot.entity.Guardian;
+import com.koko.practicespringboot.entity.Student;
 import com.koko.practicespringboot.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,23 @@ class CourseRepositoryTest {
         for (Course course : courses.getContent()) {
             System.out.println(course);
         }
+    }
+
+    @Test
+    public void saveCourseWithStudentAndTeacher() {
+        Teacher teacher = Teacher.builder()
+                .name("smt")
+                .build();
+        Student student1 = Student.builder().name("boo lone").email("boo@boolone.com").guardian(Guardian.builder().name("daddu").mobile("89748475").build()).build();
+        Course course = Course.builder()
+                .title("AI")
+                .credit(12)
+                .teacher(teacher)
+                .build();
+
+        course.addStudents(student1);
+
+        repository.save(course);
     }
 
 }

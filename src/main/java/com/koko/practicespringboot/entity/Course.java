@@ -1,7 +1,13 @@
 package com.koko.practicespringboot.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,4 +35,25 @@ public class Course {
             referencedColumnName = "id"
     )
     private Teacher teacher;
+
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "student_course_map",
+            joinColumns = @JoinColumn(
+                    name = "course_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "student_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private List<Student> students;
+
+    public void addStudents(Student student) {
+        if (students == null) students = new ArrayList<>();
+        students.add(student);
+    }
 }
