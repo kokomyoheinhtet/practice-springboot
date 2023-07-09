@@ -6,11 +6,10 @@ import com.koko.practicespringboot.model.UserModel;
 import com.koko.practicespringboot.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -33,5 +32,15 @@ public class RegistrationController {
 
     private String applicationUrl(HttpServletRequest request) {
         return "http://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getContextPath();
+    }
+
+    @GetMapping("/verifyRegistration")
+    public ResponseEntity<String> verifyRegistration(@RequestParam String token) {
+        String result = userService.validateVerificationToken(token);
+        if (StringUtils.equalsIgnoreCase("valid", result)) {
+            return ResponseEntity.ok("User verification success");
+        }
+
+        return ResponseEntity.badRequest().body("token is invalid");
     }
 }
